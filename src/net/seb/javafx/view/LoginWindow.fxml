@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<!--        the following line was deleted from the AnchorPane:  -->
+<!--        fx:controller="net.seb.javafx.controller.LoginWindowController"-->
+
+<AnchorPane prefHeight="344.0" prefWidth="521.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Button layoutX="197.0" layoutY="220.0" mnemonicParsing="false" onAction="#loginButtonAction" prefHeight="51.0" prefWidth="128.0" text="Login" />
+      <Label layoutX="50.0" layoutY="123.0" text="Email Address" />
+      <Label layoutX="50.0" layoutY="158.0" prefHeight="17.0" prefWidth="75.0" text="Password" />
+      <TextField fx:id="emailAddressField" layoutX="147.0" layoutY="119.0" prefHeight="25.0" prefWidth="264.0" />
+      <PasswordField fx:id="passwordField" layoutX="147.0" layoutY="154.0" prefHeight="25.0" prefWidth="264.0" />
+      <Label fx:id="errorLabel" layoutX="195.0" layoutY="287.0" prefHeight="25.0" prefWidth="128.0" />
+   </children>
+</AnchorPane>
