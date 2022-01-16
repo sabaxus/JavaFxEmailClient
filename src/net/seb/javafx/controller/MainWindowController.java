@@ -3,13 +3,16 @@ package net.seb.javafx.controller;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TreeView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.web.WebView;
+import javafx.util.Callback;
 import net.seb.javafx.EmailManager;
 import net.seb.javafx.model.EmailMessage;
 import net.seb.javafx.model.EmailTreeItem;
+import net.seb.javafx.model.SizeInteger;
 import net.seb.javafx.view.ViewFactory;
 
 import java.net.URL;
@@ -33,7 +36,7 @@ public class MainWindowController extends BaseController implements Initializabl
     private TableColumn<EmailMessage, String> recipientCol;
 
     @FXML
-    private TableColumn<EmailMessage, Integer> sizeCol;
+    private TableColumn<EmailMessage, SizeInteger> sizeCol;
 
     @FXML
     private TableColumn<EmailMessage, Date> dateCol;
@@ -60,6 +63,28 @@ public class MainWindowController extends BaseController implements Initializabl
         setupEmailsTreeView();
         setupEmailsTableView();
         setupFolderSelection();
+        setUpBoldRows();
+    }
+
+    private void setUpBoldRows() {
+        emailsTableView.setRowFactory(new Callback<TableView<EmailMessage>, TableRow<EmailMessage>>() {
+            @Override
+            public TableRow<EmailMessage> call(TableView<EmailMessage> param) {
+                return new TableRow<>() {
+                    @Override
+                    protected void updateItem(EmailMessage item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (item != null) {
+                            if (item.isRead()) {
+                                setStyle("");
+                            } else {
+                                setStyle("-fx-font-weight: bold");
+                            }
+                        }
+                    }
+                };
+            }
+        });
     }
 
     private void setupFolderSelection() {
