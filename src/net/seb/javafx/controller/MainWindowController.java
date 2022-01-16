@@ -10,6 +10,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.web.WebView;
 import javafx.util.Callback;
 import net.seb.javafx.EmailManager;
+import net.seb.javafx.controller.services.MessageRendererService;
 import net.seb.javafx.model.EmailMessage;
 import net.seb.javafx.model.EmailTreeItem;
 import net.seb.javafx.model.SizeInteger;
@@ -20,8 +21,6 @@ import java.util.Date;
 import java.util.ResourceBundle;
 
 public class MainWindowController extends BaseController implements Initializable {
-    @FXML
-    private WebView emailWebView;
 
     @FXML
     private TableView<EmailMessage> emailsTableView;
@@ -44,6 +43,11 @@ public class MainWindowController extends BaseController implements Initializabl
     @FXML
     private TreeView<String> emailsTreeView;
 
+    @FXML
+    private WebView emailWebView;
+
+    private MessageRendererService messageRendererService;
+
     public MainWindowController(EmailManager emailManager, ViewFactory viewFactory, String fxmlName) {
         super(emailManager, viewFactory, fxmlName);
     }
@@ -64,6 +68,22 @@ public class MainWindowController extends BaseController implements Initializabl
         setupEmailsTableView();
         setupFolderSelection();
         setUpBoldRows();
+        setupMessageRendererService();
+        setupMessageSelection();
+    }
+
+    private void setupMessageSelection() {
+        emailsTableView.setOnMouseClicked(event -> {
+            EmailMessage emailMessage = emailsTableView.getSelectionModel().getSelectedItem();
+            if (emailMessage != null) {
+                messageRendererService.setEmailMessage(emailMessage);
+                messageRendererService.restart();
+            }
+        });
+    }
+
+    private void setupMessageRendererService() {
+        messageRendererService = new MessageRendererService(emailWebView.getEngine());
     }
 
     private void setUpBoldRows() {
