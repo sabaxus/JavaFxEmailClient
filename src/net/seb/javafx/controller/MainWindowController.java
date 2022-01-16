@@ -2,10 +2,7 @@ package net.seb.javafx.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.web.WebView;
 import javafx.util.Callback;
@@ -21,6 +18,9 @@ import java.util.Date;
 import java.util.ResourceBundle;
 
 public class MainWindowController extends BaseController implements Initializable {
+
+    private MenuItem markUnreadMenuItem = new MenuItem("mark as unread");
+    private MenuItem deleteMessageMenuItem = new MenuItem("delete message");
 
     @FXML
     private TableView<EmailMessage> emailsTableView;
@@ -70,6 +70,17 @@ public class MainWindowController extends BaseController implements Initializabl
         setUpBoldRows();
         setupMessageRendererService();
         setupMessageSelection();
+        setupContextMenus();
+    }
+
+    private void setupContextMenus() {
+        markUnreadMenuItem.setOnAction(event -> {
+            emailManager.setUnRead();
+        });
+        deleteMessageMenuItem.setOnAction(event -> {
+            emailManager.deleteSelectedMessage();
+            emailWebView.getEngine().loadContent("");
+        });
     }
 
     private void setupMessageSelection() {
@@ -127,6 +138,8 @@ public class MainWindowController extends BaseController implements Initializabl
         recipientCol.setCellValueFactory(new PropertyValueFactory<>("recipient"));
         sizeCol.setCellValueFactory(new PropertyValueFactory<>("size"));
         dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
+
+        emailsTableView.setContextMenu(new ContextMenu(markUnreadMenuItem, deleteMessageMenuItem));
     }
 
     private void setupEmailsTreeView() {
