@@ -1,11 +1,14 @@
 package net.seb.javafx;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.TreeItem;
 import net.seb.javafx.controller.services.FetchFoldersService;
 import net.seb.javafx.controller.services.FolderUpdaterService;
 import net.seb.javafx.model.EmailAccount;
 import net.seb.javafx.model.EmailMessage;
 import net.seb.javafx.model.EmailTreeItem;
+import net.seb.javafx.view.IconResolver;
 
 import javax.mail.Flags;
 import javax.mail.Folder;
@@ -16,6 +19,16 @@ public class EmailManager {
 
     private EmailMessage selectedMessage;
     private EmailTreeItem<String> selectedFolder;
+    private ObservableList<EmailAccount> emailAccounts = FXCollections.observableArrayList();
+    private IconResolver iconResolver = new IconResolver();
+
+    public ObservableList<EmailAccount> getEmailAccounts() {
+        return emailAccounts;
+    }
+
+//    public void setEmailAccounts(ObservableList<EmailAccount> emailAccounts) {
+//        this.emailAccounts = emailAccounts;
+//    }
 
     public EmailMessage getSelectedMessage() {
         return selectedMessage;
@@ -54,7 +67,9 @@ public class EmailManager {
     }
 
     public void addEmailAccount(EmailAccount emailAccount) {
+        emailAccounts.add(emailAccount);
         EmailTreeItem<String> treeItem = new EmailTreeItem<>(emailAccount.getAddress());
+        treeItem.setGraphic(iconResolver.getIconForFolder(emailAccount.getAddress()));
         FetchFoldersService fetchFoldersService = new FetchFoldersService(emailAccount.getStore(), treeItem, folderList);
         fetchFoldersService.start();
         foldersRoot.getChildren().add(treeItem);
