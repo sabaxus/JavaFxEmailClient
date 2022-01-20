@@ -46,7 +46,7 @@ public class ViewFactory {
     }
 
     public void showLoginWindow() {
-        System.out.println("Show Login Window called");
+        //System.out.println("Show Login Window called");
 
         BaseController controller = new LoginWindowController(emailManager, this, "LoginWindow.fxml");
 
@@ -54,7 +54,7 @@ public class ViewFactory {
     }
 
     public void showMainWindow() {
-        System.out.println("Show Main Window called");
+        //System.out.println("Show Main Window called");
 
         BaseController controller = new MainWindowController(emailManager, this, "MainWindow.fxml");
 
@@ -63,7 +63,7 @@ public class ViewFactory {
     }
 
     public void showOptionsWindow() {
-        System.out.println("Options Window called");
+        //System.out.println("Options Window called");
 
         BaseController controller = new OptionsWindowController(emailManager, this, "OptionsWindow.fxml");
 
@@ -71,7 +71,7 @@ public class ViewFactory {
     }
 
     public void showComposeMessageWindow() {
-        System.out.println("Compose Message Window called");
+        //System.out.println("Compose Message Window called");
 
         BaseController controller = new ComposeMessageController(emailManager, this, "ComposeMessageWindow.fxml");
 
@@ -91,6 +91,7 @@ public class ViewFactory {
         }
 
         Scene scene = new Scene(parent);
+        updateStyle(scene);
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
@@ -102,12 +103,25 @@ public class ViewFactory {
         activeStages.remove(stageToClose);
     }
 
-    public void updateStyles() {
+//    public void updateStyles() {
+//        for (Stage stage : activeStages) {
+//            Scene scene = stage.getScene();
+//            scene.getStylesheets().clear();
+//            scene.getStylesheets().add(getClass().getResource(ColorTheme.getCssPath(colorTheme)).toExternalForm());
+//            scene.getStylesheets().add(getClass().getResource(FontSize.getCssPath(fontSize)).toExternalForm());
+//        }
+//    }
+
+    public void updateAllStyles() {
         for (Stage stage : activeStages) {
             Scene scene = stage.getScene();
-            scene.getStylesheets().clear();
-            scene.getStylesheets().add(getClass().getResource(ColorTheme.getCssPath(colorTheme)).toExternalForm());
-            scene.getStylesheets().add(getClass().getResource(FontSize.getCssPath(fontSize)).toExternalForm());
+            updateStyle(scene);
         }
+    }
+
+    public void updateStyle(Scene scene) {
+        scene.getStylesheets().clear();
+        scene.getStylesheets().add(getClass().getResource(ColorTheme.getCssPath(colorTheme)).toExternalForm());
+        scene.getStylesheets().add(getClass().getResource(FontSize.getCssPath(fontSize)).toExternalForm());
     }
 }
