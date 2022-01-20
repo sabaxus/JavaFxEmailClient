@@ -9,7 +9,7 @@
 <!--        the following line was deleted from the AnchorPane:  -->
 <!--        fx:controller="net.seb.javafx.controller.LoginWindowController"-->
 
-<AnchorPane prefHeight="344.0" prefWidth="521.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="344.0" prefWidth="521.0" styleClass="container" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Button layoutX="197.0" layoutY="220.0" mnemonicParsing="false" onAction="#loginButtonAction" prefHeight="51.0" prefWidth="128.0" text="Login" />
       <Label layoutX="50.0" layoutY="123.0" text="Email Address" />
