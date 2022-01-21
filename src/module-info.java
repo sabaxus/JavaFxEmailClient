@@ -5,6 +5,7 @@ module JavaFxEmailClient {
     requires javafx.web;
     requires activation;
     requires java.mail;
+    requires java.desktop;
 
     opens net.seb.javafx;
     opens net.seb.javafx.view;

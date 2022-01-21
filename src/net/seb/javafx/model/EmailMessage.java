@@ -6,9 +6,7 @@ import javafx.beans.property.SimpleStringProperty;
 
 import javax.mail.Message;
 import javax.mail.internet.MimeBodyPart;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class EmailMessage {
 
@@ -19,14 +17,14 @@ public class EmailMessage {
     private SimpleObjectProperty<Date> date;
     private boolean isRead;
     private Message message;
-    private List<MimeBodyPart> attachmentList = new ArrayList<>();
+    private Set<MimeBodyPart> attachmentList = new HashSet<>();
     private boolean hasAttachments;
 
     public boolean hasAttachments() {
         return hasAttachments;
     }
 
-    public List<MimeBodyPart> getAttachmentList() {
+    public Set<MimeBodyPart> getAttachmentList() {
         return attachmentList;
     }
 
