@@ -6,16 +6,22 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.web.HTMLEditor;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import net.seb.javafx.EmailManager;
 import net.seb.javafx.controller.services.EmailSenderService;
 import net.seb.javafx.model.EmailAccount;
 import net.seb.javafx.view.ViewFactory;
 
+import java.io.File;
 import java.net.URL;
+import java.util.HashSet;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 public class ComposeMessageController extends BaseController implements Initializable {
+
+    private Set<File> attachments = new HashSet<>();
 
     @FXML
     private Label errorLabel;
@@ -33,13 +39,23 @@ public class ComposeMessageController extends BaseController implements Initiali
     private ChoiceBox<EmailAccount> emailAccountChoice;
 
     @FXML
+    void attachButtonAction() {
+        FileChooser fileChooser = new FileChooser();
+        File selectedFile = fileChooser.showOpenDialog(null);
+        if (selectedFile != null) {
+            attachments.add(selectedFile);
+        }
+    }
+
+    @FXML
     void sendButtonAction() {
         // System.out.println("Send button");
         EmailSenderService emailSenderService = new EmailSenderService(
                 emailAccountChoice.getValue(),
                 subjectTextField.getText(),
                 recipientTextField.getText(),
-                htmlEditor.getHtmlText()
+                htmlEditor.getHtmlText(),
+                attachments
         );
         emailSenderService.start();
         emailSenderService.setOnSucceeded(e -> {
